@@ -3,11 +3,18 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const config = {
-  entry: './src/index.ts',
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+  entry: {
+    main:[
+      "./src/ts/main.ts",
+      "./src/scss/main.scss"
+    ]
   },
+  output: {
+    path: path.resolve(__dirname, 'assets'),
+    filename: '[name].min.js',
+    clean: true,
+  },
+  devtool: "source-map",
   module: {
     rules: [
       {
@@ -27,6 +34,13 @@ const config = {
           'css-loader',
           'sass-loader'
         ]
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: "./img/[name][ext]"
+        }
       }
     ]
   },
